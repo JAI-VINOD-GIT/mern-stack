@@ -1,30 +1,29 @@
-require('dotenv').config();
-const { Sequelize } = require('sequelize');
-const express = require('express');
+// server.js
+const express = require("express");
+const sequelize = require("./config/db");
+const userRoutes = require("./routes/userRoutes");
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: 'postgres',
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
-  }
-});
+// Middleware
+app.use(express.json());
 
+// Routes
+app.use("/api", userRoutes);
+
+// Sync Sequelize models with the database
 (async () => {
   try {
     await sequelize.authenticate();
-    console.log('PostgreSQL connected successfully!');
-    await sequelize.sync();  
+    console.log("Database connected successfully!");
+    await sequelize.sync(); // Sync models with the database
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
+    console.error("Unable to connect to the database:", error);
   }
 })();
 
-
-app.get('/', (req, res) => res.send('Backend running with PostgreSQL!'));
-
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
