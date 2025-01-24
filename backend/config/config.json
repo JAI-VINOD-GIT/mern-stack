@@ -1,0 +1,20 @@
+{
+    "development": {
+      "username": "mern_stack_db_user",
+      "password": "wU28sVJBR41ZyqzPmnTTUwYxJrIAMCST",
+      "database": "mern_stack_db",
+      "host": "dpg-cu9k0o3qf0us73c0sg8g-a.singapore-postgres.render.com",
+      "dialect": "postgres"
+    },
+    "production": {
+      "use_env_variable": "DATABASE_URL",
+      "dialect": "postgres",
+      "dialectOptions": {
+        "ssl": {
+          "require": true,
+          "rejectUnauthorized": false
+        }
+      }
+    }
+  }
+  
